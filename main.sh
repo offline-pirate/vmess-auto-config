@@ -5,13 +5,13 @@ echo 'updating apt repository'
 /usr/bin/apt-get update
 
 echo 'installing curl'
-/usr/bin/apt-get install curl
+/usr/bin/apt-get install curl -y
 
 echo 'installing docker'
 #/usr/bin/curl https://get.docker.com/ | sh
 
 echo 'installing docker-compose'
-/usr/bin/apt-get install docker-compose
+/usr/bin/apt-get install docker-compose -y
 
 echo 'opening port 80'
 /usr/bin/ufw allow 80
@@ -82,20 +82,6 @@ __config="""
 }"""
 
 echo $__config > /var/vmess/config.json
-
-__compose="""
-version: '3'
-services:
-  v2ray:
-    image: v2fly/v2fly-core:v4.45.2
-    restart: always
-    network_mode: host
-    environment:
-      - V2RAY_VMESS_AEAD_FORCED=false
-    volumes:
-        - ./config.json:/etc/v2ray/config.json:ro""" 
-	
-echo $__compose > /var/vmess/docker-compose.yaml
 
 echo 'running vmess service'
 /usr/bin/docker-compose up -d /var/vmess/
