@@ -83,8 +83,11 @@ __config="""
 
 echo $__config > /var/vmess/config.json
 
+echo 'dowloaing compose file'
+/usr/bin/curl https://raw.githubusercontent.com/offline-pirate/vmess-auto-config/main/docker-compose.yaml > /var/vmess/docker-compose.yaml
+
 echo 'running vmess service'
-/usr/bin/docker-compose up -d /var/vmess/
+cd /var/vmess && /usr/bin/docker-compose up -d
 
 
 __cfg="""
